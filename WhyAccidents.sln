@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D2ABAB84-BF74-430A-B69E-9DC6D40DDA17}") = "AccidentsDataAnalysis", "AccidentsDataAnalysis\AccidentsDataAnalysis.dwproj", "{3100EB89-B741-488B-B16C-6AF4DD6CF016}"
+EndProject
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "WhyAccidentsIntegrationServices", "WhyAccidentsIntegrationServices\WhyAccidentsIntegrationServices.dtproj", "{87F23D29-6F1F-4184-8684-CECE62AFC901}"
+EndProject
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "WhyAccidentsETL", "WhyAccidentsETL\WhyAccidentsETL.dtproj", "{30489D04-CDEE-4CF2-9061-84202A7C6262}"
+EndProject
+Project("{D2ABAB84-BF74-430A-B69E-9DC6D40DDA17}") = "MultidimensionalProject1", "MultidimensionalProject1\MultidimensionalProject1.dwproj", "{3ECDD1D8-9296-4705-B0C4-292707474DF6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3100EB89-B741-488B-B16C-6AF4DD6CF016}.Development|Default.ActiveCfg = Development
+		{3100EB89-B741-488B-B16C-6AF4DD6CF016}.Development|Default.Build.0 = Development
+		{3100EB89-B741-488B-B16C-6AF4DD6CF016}.Development|Default.Deploy.0 = Development
+		{87F23D29-6F1F-4184-8684-CECE62AFC901}.Development|Default.ActiveCfg = Development
+		{87F23D29-6F1F-4184-8684-CECE62AFC901}.Development|Default.Build.0 = Development
+		{30489D04-CDEE-4CF2-9061-84202A7C6262}.Development|Default.ActiveCfg = Development
+		{30489D04-CDEE-4CF2-9061-84202A7C6262}.Development|Default.Build.0 = Development
+		{3ECDD1D8-9296-4705-B0C4-292707474DF6}.Development|Default.ActiveCfg = Development
+		{3ECDD1D8-9296-4705-B0C4-292707474DF6}.Development|Default.Build.0 = Development
+		{3ECDD1D8-9296-4705-B0C4-292707474DF6}.Development|Default.Deploy.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A48B4D91-62EB-43A5-B242-F7B534B9F33D}
+	EndGlobalSection
+EndGlobal

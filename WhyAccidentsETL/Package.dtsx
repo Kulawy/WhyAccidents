@@ -1,0 +1,804 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/27/2019 11:09:38 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-CK10ME5"
+  DTS:CreatorName="DESKTOP-CK10ME5\Jakub"
+  DTS:DTSID="{3FC0DE61-A199-47EF-816D-1BF53C344ADF}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.1100.123"
+  DTS:LocaleID="1045"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="41"
+  DTS:VersionGUID="{F1F2FA02-C0CA-4D05-B29C-2C74DE569967}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.WhyAccidents]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+      DTS:ObjectName="LocalHost.WhyAccidents">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=WhyAccidents;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\CLEAR ALL"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{DB6FA850-40BE-4BFA-8768-D02D4104435C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CLEAR ALL"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+          SQLTask:SqlStatementSource="DELETE FROM qbe.FACT_ACCIDENT;&#xA;DELETE FROM qbe.DIM_VEHICLE;&#xA;DELETE FROM qbe.DIM_DRIVER;&#xA;DELETE FROM qbe.DIM_WEATHER;&#xA;DELETE FROM qbe.DIM_DATE;&#xA;DELETE FROM qbe.DIM_ROAD;&#xA;DELETE FROM qbe.DIM_LOCATION;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DIM_DATE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3E579C55-8AA6-4DF2-9C85-12A61181BE5B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DIM_DATE"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+          SQLTask:SqlStatementSource="SELECT &#xA;&#x9;DateId,&#xA;&#x9;YEAR(DateVal) as YearAcc,&#xA;&#x9;MONTH(DateVal) as MonthAcc,&#xA;&#x9;DAY(DateVal) as DayAcc,&#xA;&#x9;DayOfWeekVal as DayOfWeekAcc ,&#xA;&#x9;TimeVal as TimeAcc ,&#xA;&#x9;IsHoliday&#xA;INTO qbe.DIM_DATE&#xA;FROM Date_UK;&#x9;&#xA;ALTER TABLE qbe.DIM_DATE WITH NOCHECK ADD CONSTRAINT PK_Date_UK PRIMARY KEY(DateId);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DIM_DEMOG_ECO"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{58F798F7-D4E0-474D-AA3F-EFE6E6245EE2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DIM_DEMOG_ECO"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DIM_DRIVER"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{29C30801-8C75-4679-BC81-EFDDC2A51FDF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DIM_DRIVER"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+          SQLTask:SqlStatementSource="SELECT&#xA;&#x9;DriverId ,&#xA;&#x9;AgeBandOfDriver,&#xA;&#x9;Sex ,&#xA;&#x9;DriverHomeAreaType&#xA;INTO qbe.DIM_DRIVER&#xA;FROM Driver_UK;&#xA;&#xA;ALTER TABLE qbe.DIM_DRIVER WITH NOCHECK ADD CONSTRAINT PK_Driver_UK PRIMARY KEY (DriverId);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DIM_LOCATION"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{1EB71204-3FC7-4397-91DC-DB38EA9E76B5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DIM_LOCATION"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+          SQLTask:SqlStatementSource="SELECT &#xA;&#x9;LocationId,&#xA;&#x9;Latitude ,&#xA;&#x9;Longitude ,&#xA;&#x9;AreaType ,&#xA;&#x9;DistrictName &#xA;INTO qbe.DIM_LOCATION&#xA;FROM Location_UK;&#xA;ALTER TABLE qbe.DIM_LOCATION WITH NOCHECK ADD CONSTRAINT PK_Location_UK PRIMARY KEY (LocationId);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DIM_ROAD"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A5BE5976-91AC-4907-A291-D10678145861}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DIM_ROAD"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+          SQLTask:SqlStatementSource="SELECT&#xA;&#x9;RoadId ,&#xA;&#x9;RoadClass ,&#xA;&#x9;RoadNumber ,&#xA;&#x9;RoadType ,&#xA;&#x9;RoadSurfaceCondition&#xA;INTO qbe.DIM_ROAD&#xA;FROM Road_UK;&#xA;ALTER TABLE qbe.DIM_ROAD WITH NOCHECK ADD CONSTRAINT PK_Road_UK PRIMARY KEY (RoadId);&#xA;&#xA;UPDATE qbe.DIM_ROAD&#xA;SET RoadNumber = 0&#xA;  FROM [WhyAccidents].[qbe].[DIM_ROAD]&#xA;  WHERE RoadNumber IS NULL" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DIM_VEHICLE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9F498F65-1D21-4E73-B522-50079C6326E7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DIM_VEHICLE"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+          SQLTask:SqlStatementSource="SELECT&#xA;&#x9;vuk.VehicleId,&#xA;&#x9;vuk.ProductionYear,&#xA;&#x9;vuk.Age,&#xA;&#x9;vuk.VehicleType,&#xA;&#x9;vuk.EngineCapacityCC,&#xA;&#x9;vuk.Model,&#xA;&#x9;vuk.Left_Hand_Drive&#xA;INTO qbe.DIM_VEHICLE&#xA;FROM Vehicle_UK vuk;&#xA;&#xA;ALTER TABLE qbe.DIM_VEHICLE WITH NOCHECK ADD CONSTRAINT PK_DimVehicle PRIMARY KEY (VehicleId);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DIM_WEATHER"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4B170155-2657-44CC-8F9F-4BD22C7CEEB0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DIM_WEATHER"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+          SQLTask:SqlStatementSource="SELECT&#xA;&#x9;WeatherId ,&#xA;&#x9;LightCondition ,&#xA;&#x9;WeatherCondition ,&#xA;&#x9;TempMin ,&#xA;&#x9;TempMax ,&#xA;&#x9;TempAvg ,&#xA;&#x9;PRCP &#xA;INTO qbe.DIM_WEATHER&#xA;FROM Weather_UK;&#xA;&#x9;&#xA;ALTER TABLE qbe.DIM_WEATHER WITH NOCHECK ADD CONSTRAINT PK_Weather_UK PRIMARY KEY(WeatherId);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DriverInAccident"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9B49854B-B0C7-4628-8929-52C05D3158AB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DriverInAccident"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+          SQLTask:SqlStatementSource="CREATE TABLE qbe.DriverInAccident(&#xA;&#x9;DriverInAccidentId INT NOT NULL IDENTITY(1,1),&#xA;&#x9;DriverId INT NOT NULL,&#xA;&#x9;AccidentIndex VARCHAR(21) NOT NULL,&#xA;&#x9;CONSTRAINT PK_DriverInAccident PRIMARY KEY(DriverInAccidentId)&#xA;);&#xA;&#xA;INSERT INTO qbe.DriverInAccident(DriverId, AccidentIndex)&#xA;SELECT &#xA;&#x9;duk.DriverId,&#xA;&#x9;duk.AccidentIndex&#xA;FROM Driver_UK duk;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DROP ALL"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{fcb7bc6c-79fa-4f73-87b0-2ddf15e2434f}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DROP ALL"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+          SQLTask:SqlStatementSource="DROP TABLE qbe.VehicleInAccident;&#xA;DROP TABLE qbe.DriverInAccident;&#xA;DROP TABLE qbe.FACT_ACCIDENT;&#xA;DROP TABLE qbe.DIM_VEHICLE;&#xA;DROP TABLE qbe.DIM_DRIVER;&#xA;DROP TABLE qbe.DIM_WEATHER;&#xA;DROP TABLE qbe.DIM_DATE;&#xA;DROP TABLE qbe.DIM_ROAD;&#xA;DROP TABLE qbe.DIM_LOCATION;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\FACT_ACCIDENT"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{ED16DACF-8B5D-42FF-B3BE-5C9F7E4208D0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="FACT_ACCIDENT"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+          SQLTask:SqlStatementSource="CREATE TABLE qbe.FACT_ACCIDENT(&#xA;&#x9;AccidentIndex VARCHAR(21) NOT NULL,&#xA;&#x9;LocationId INT,&#xA;&#x9;RoadId INT,&#xA;&#x9;WeatherId INT,&#xA;&#x9;DateId INT,&#xA;&#x9;AccidentScale NVARCHAR(50),&#xA;&#x9;Cassulties_Count BIGINT,&#xA;&#x9;Vehicles_Count BIGINT&#xA;&#x9;CONSTRAINT PK_FactAccident PRIMARY KEY (AccidentIndex)&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\FILL FACTS"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C3C7E8DC-AB68-479D-8D72-7EA01D4BD56B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="FILL FACTS"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+          SQLTask:SqlStatementSource="INSERT INTO qbe.FACT_ACCIDENT(AccidentIndex, AccidentScale, Cassulties_Count, Vehicles_Count)&#xA;SELECT &#xA;&#x9;acc.Accident_Index,&#xA;&#x9;acc.Accident_Severity as AccidentScale,&#xA;&#x9;acc.Number_of_Casualties as Cassualities_Count,&#xA;&#x9;acc.Number_of_Vehicles as Vehicles_Count&#xA;FROM Accident_Information_UK acc&#xA;&#xA;UPDATE qbe.FACT_ACCIDENT &#xA;SET RoadId = r.RoadId&#xA;FROM dbo.Road_UK r&#xA;WHERE qbe.FACT_ACCIDENT.AccidentIndex = r.AccidentIndex&#xA;&#xA;UPDATE qbe.FACT_ACCIDENT &#xA;SET WeatherId = w.WeatherId&#xA;FROM dbo.Weather_UK w&#xA;WHERE qbe.FACT_ACCIDENT.AccidentIndex = w.AccidentIndex&#xA;&#xA;UPDATE qbe.FACT_ACCIDENT &#xA;SET LocationId = l.LocationId&#xA;FROM dbo.Location_UK l&#xA;WHERE qbe.FACT_ACCIDENT.AccidentIndex = l.AccidentIndex&#xA;&#xA;UPDATE qbe.FACT_ACCIDENT &#xA;SET DateId = d.DateId&#xA;FROM dbo.Date_UK d&#xA;WHERE qbe.FACT_ACCIDENT.AccidentIndex = d.AccidentIndex&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\MAKE_CONNECTIONS"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3B657C88-7ADC-40DE-8569-60F48ADB27A4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="MAKE_CONNECTIONS"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+          SQLTask:SqlStatementSource="ALTER TABLE qbe.FACT_ACCIDENT WITH NOCHECK &#xA;ADD CONSTRAINT [FK_FactAccident_DimRoad] &#xA;&#x9;FOREIGN KEY (RoadId) REFERENCES qbe.DIM_ROAD(RoadId);&#xA;&#xA;ALTER TABLE qbe.FACT_ACCIDENT WITH NOCHECK &#xA;ADD CONSTRAINT [FK_FactAccident_DimLocation] &#xA;&#x9;FOREIGN KEY (LocationId) REFERENCES qbe.DIM_LOCATION(LocationId);&#xA;&#xA;ALTER TABLE qbe.FACT_ACCIDENT WITH NOCHECK &#xA;ADD CONSTRAINT [FK_FactAccident_DimWeather] &#xA;&#x9;FOREIGN KEY (WeatherId) REFERENCES qbe.DIM_WEATHER(WeatherId);&#xA;&#xA;ALTER TABLE qbe.FACT_ACCIDENT WITH NOCHECK &#xA;ADD CONSTRAINT [FK_FactAccident_DimDate] &#xA;&#x9;FOREIGN KEY (DateId) REFERENCES qbe.DIM_DATE(DateId);&#xA;&#xA;&#xA;&#xA;ALTER TABLE qbe.VehicleInAccident WITH NOCHECK &#xA;ADD CONSTRAINT [FK_VehicleInAccident_FactAccident] &#xA;&#x9;FOREIGN KEY (AccidentIndex) REFERENCES qbe.FACT_ACCIDENT(AccidentIndex);&#xA;&#xA;ALTER TABLE qbe.DriverInAccident WITH NOCHECK &#xA;ADD CONSTRAINT [FK_DriverInAccident_FactAccident] &#xA;&#x9;FOREIGN KEY (AccidentIndex) REFERENCES qbe.FACT_ACCIDENT(AccidentIndex);&#xA;&#xA;ALTER TABLE qbe.VehicleInAccident WITH NOCHECK &#xA;ADD CONSTRAINT [FK_VehicleInAccident_DimVehicle] &#xA;&#x9;FOREIGN KEY (VehicleId) REFERENCES qbe.DIM_VEHICLE(VehicleId);&#xA;&#xA;ALTER TABLE qbe.DriverInAccident WITH NOCHECK &#xA;ADD CONSTRAINT [FK_DriverInAccident_DimDriver] &#xA;&#x9;FOREIGN KEY (DriverId) REFERENCES qbe.DIM_DRIVER(DriverId);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\VehicleInAccident"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D22A5D03-94F7-4653-BDD2-FB6495A732C3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="VehicleInAccident"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{411CE880-424A-4D7A-BCD5-F5737381FFFC}"
+          SQLTask:SqlStatementSource="CREATE TABLE qbe.VehicleInAccident(&#xA;&#x9;VehicleInAccidentId INT NOT NULL IDENTITY(1,1),&#xA;&#x9;AccidentIndex VARCHAR(21) NOT NULL,&#xA;&#x9;VehicleId INT NOT NULL,&#xA;&#x9;CONSTRAINT PK_VehicleInAccident PRIMARY KEY (VehicleInAccidentId)&#xA;);&#xA;&#xA;INSERT INTO qbe.VehicleInAccident(AccidentIndex, VehicleId)&#xA;SELECT &#xA;&#x9;vuk.AccidentIndex,&#xA;&#x9;vuk.VehicleId&#xA;FROM Vehicle_UK vuk;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{9927B579-6368-4FB0-B9D9-BC488B892B95}"
+      DTS:From="Package\DIM_VEHICLE"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DIM_DRIVER" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{E72FCBFB-2DC8-433F-8682-3C92A9B2F6C5}"
+      DTS:From="Package\DIM_DRIVER"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DIM_ROAD" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 10]"
+      DTS:CreationName=""
+      DTS:DTSID="{6497B91D-B56B-49EE-A469-107CCC7605B6}"
+      DTS:From="Package\VehicleInAccident"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 10"
+      DTS:To="Package\DriverInAccident" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{C02C369A-C3B1-4F87-A4CC-35C3F029B861}"
+      DTS:From="Package\DIM_ROAD"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\DIM_LOCATION" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{E5E351D3-05EA-4BD0-8C7B-673B315E83C4}"
+      DTS:From="Package\DIM_LOCATION"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\DIM_WEATHER" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{71575CA8-9BE4-4899-A34C-D7726D90A55F}"
+      DTS:From="Package\DIM_WEATHER"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\DIM_DATE" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{B49F91C1-68CF-423D-BD91-084F416EA586}"
+      DTS:From="Package\FACT_ACCIDENT"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\MAKE_CONNECTIONS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{13BC48F3-1F94-4F00-9161-8F0BAE917005}"
+      DTS:From="Package\DROP ALL"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\VehicleInAccident" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{C867911C-8BE6-4614-B817-80CF3F2FD836}"
+      DTS:From="Package\DIM_DATE"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\FACT_ACCIDENT" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{79FA6C87-3B79-4FDD-A9B1-54099194DE07}"
+      DTS:From="Package\MAKE_CONNECTIONS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\FILL FACTS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 9]"
+      DTS:CreationName=""
+      DTS:DTSID="{36C54425-9EEF-4C3C-A9BF-6B46DAD9C349}"
+      DTS:From="Package\DriverInAccident"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 9"
+      DTS:To="Package\DIM_VEHICLE" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib">
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="249,133.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="140,0"
+              Start="0,0"
+              End="132.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="132.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="770,506">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="209,-60"
+              Start="0,0"
+              End="201.5,-60">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="100.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="100.5,0"
+                    Point2="104.5,0"
+                    Point3="104.5,-4" />
+                  <mssgle:LineSegment
+                    End="104.5,-56" />
+                  <mssgle:CubicBezierSegment
+                    Point1="104.5,-56"
+                    Point2="104.5,-60"
+                    Point3="108.5,-60" />
+                  <mssgle:LineSegment
+                    End="201.5,-60" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="172,42"
+          Id="Package\DIM_ROAD"
+          TopLeft="248.5,168.5" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\DIM_DEMOG_ECO"
+          TopLeft="246.833333333333,480.833333333333" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\DIM_DATE"
+          TopLeft="241.5,397.5" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\DIM_WEATHER"
+          TopLeft="249.5,316.5" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\DIM_LOCATION"
+          TopLeft="245.5,240.5" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\DIM_VEHICLE"
+          TopLeft="239.5,20.5" />
+        <NodeLayout
+          Size="141,42"
+          Id="Package\DIM_DRIVER"
+          TopLeft="245.5,103.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="352.833333333333,62.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-36.8333333333333,41"
+              Start="0,0"
+              End="-36.8333333333333,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.6267281105991" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.6267281105991"
+                    Point2="0,16.6267281105991"
+                    Point3="-4,16.6267281105991" />
+                  <mssgle:LineSegment
+                    End="-32.8333333333333,16.6267281105991" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-32.8333333333333,16.6267281105991"
+                    Point2="-36.8333333333333,16.6267281105991"
+                    Point3="-36.8333333333333,20.6267281105991" />
+                  <mssgle:LineSegment
+                    End="-36.8333333333333,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="316,145.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="18.5,23"
+              Start="0,0"
+              End="18.5,15.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,7.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,7.5"
+                    Point2="0,11.5"
+                    Point3="4,11.5" />
+                  <mssgle:LineSegment
+                    End="14.5,11.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14.5,11.5"
+                    Point2="18.5,11.5"
+                    Point3="18.5,15.5" />
+                  <mssgle:LineSegment
+                    End="18.5,15.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="333,210.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,30"
+              Start="0,0"
+              End="0,22.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="333.5,282.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34"
+              Start="0,0"
+              End="0,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="335.5,358.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-8,39"
+              Start="0,0"
+              End="-8,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.5"
+                    Point2="0,19.5"
+                    Point3="-4,19.5" />
+                  <mssgle:LineSegment
+                    End="-4,19.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4,19.5"
+                    Point2="-8,19.5"
+                    Point3="-8,23.5" />
+                  <mssgle:LineSegment
+                    End="-8,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="163,42"
+          Id="Package\VehicleInAccident"
+          TopLeft="33,25" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\DriverInAccident"
+          TopLeft="32,122" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="135.333333333333,122">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="162.833333333333,-59.5"
+              Start="0,0"
+              End="162.833333333333,-52">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-25.7822644783457" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-25.7822644783457"
+                    Point2="0,-29.7822644783457"
+                    Point3="4,-29.7822644783457" />
+                  <mssgle:LineSegment
+                    End="158.833333333333,-29.7822644783457" />
+                  <mssgle:CubicBezierSegment
+                    Point1="158.833333333333,-29.7822644783457"
+                    Point2="162.833333333333,-29.7822644783457"
+                    Point3="162.833333333333,-33.7822644783457" />
+                  <mssgle:LineSegment
+                    End="162.833333333333,-52" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 10]"
+          TopLeft="114.5,67">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-28.8333333333333,55"
+              Start="0,0"
+              End="-28.8333333333333,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.6670870113493" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.6670870113493"
+                    Point2="0,32.6670870113493"
+                    Point3="-4,32.6670870113493" />
+                  <mssgle:LineSegment
+                    End="-24.8333333333333,32.6670870113493" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-24.8333333333333,32.6670870113493"
+                    Point2="-28.8333333333333,32.6670870113493"
+                    Point3="-28.8333333333333,36.6670870113493" />
+                  <mssgle:LineSegment
+                    End="-28.8333333333333,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <GroupLayout
+          Text="MAKE DIMs with DATA"
+          ParentId="Package"
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="431,585"
+          Size="431,628"
+          Id="71590c57-127e-4274-9a48-1f2e53144ef5"
+          TopLeft="356.5,43.5">
+          <GroupLayout.ChildrenIds>
+            <s:String>Package\DIM_ROAD</s:String>
+            <s:String>Package\DIM_DEMOG_ECO</s:String>
+            <s:String>Package\DIM_DATE</s:String>
+            <s:String>Package\DIM_WEATHER</s:String>
+            <s:String>Package\DIM_LOCATION</s:String>
+            <s:String>Package\DIM_VEHICLE</s:String>
+            <s:String>Package\DIM_DRIVER</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint]</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 1]</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 2]</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 3]</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 4]</s:String>
+            <s:String>Package\VehicleInAccident</s:String>
+            <s:String>Package\DriverInAccident</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 9]</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 10]</s:String>
+          </GroupLayout.ChildrenIds>
+        </GroupLayout>
+        <NodeLayout
+          Size="127,42"
+          Id="Package\DROP ALL"
+          TopLeft="20,20" />
+        <NodeLayout
+          Size="130,42"
+          Id="Package\CLEAR ALL"
+          TopLeft="26.5,111.5" />
+        <GroupLayout
+          Text="Init"
+          ParentId="Package"
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="173,208"
+          Size="173,251"
+          Id="7338abf7-281f-4b03-b545-6ad5ad388083"
+          TopLeft="102.5,49.5">
+          <GroupLayout.ChildrenIds>
+            <s:String>Package\DROP ALL</s:String>
+            <s:String>Package\CLEAR ALL</s:String>
+          </GroupLayout.ChildrenIds>
+        </GroupLayout>
+        <NodeLayout
+          Size="159,42"
+          Id="Package\FACT_ACCIDENT"
+          TopLeft="20.5,34.5" />
+        <NodeLayout
+          Size="183,42"
+          Id="Package\MAKE_CONNECTIONS"
+          TopLeft="219.5,37.8333333333333" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="179.5,57.1666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="40,0"
+              Start="0,0"
+              End="32.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="32.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="133,42"
+          Id="Package\FILL FACTS"
+          TopLeft="32.6666666666667,122.666666666667" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="311,79.8333333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-211.833333333333,42.8333333333333"
+              Start="0,0"
+              End="-211.833333333333,35.3333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.4166666666667" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.4166666666667"
+                    Point2="0,21.4166666666667"
+                    Point3="-4,21.4166666666667" />
+                  <mssgle:LineSegment
+                    End="-207.833333333333,21.4166666666667" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-207.833333333333,21.4166666666667"
+                    Point2="-211.833333333333,21.4166666666667"
+                    Point3="-211.833333333333,25.4166666666667" />
+                  <mssgle:LineSegment
+                    End="-211.833333333333,35.3333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <GroupLayout
+          Text="Final"
+          ParentId="Package"
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="420,216"
+          Size="420,259"
+          Id="ccb061ff-23e5-4a24-934c-089fec0e91fb"
+          TopLeft="958.83333333333,348.5">
+          <GroupLayout.ChildrenIds>
+            <s:String>Package\FACT_ACCIDENT</s:String>
+            <s:String>Package\MAKE_CONNECTIONS</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 5]</s:String>
+            <s:String>Package\FILL FACTS</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 8]</s:String>
+          </GroupLayout.ChildrenIds>
+        </GroupLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
